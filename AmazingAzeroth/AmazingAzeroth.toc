@@ -1,0 +1,13 @@
+## Interface: 30300
+## Title: Amazing Azeroth
+## Notes: Azeroth's Toolkit
+## Author: Azeroth
+## Version: 1.0.0
+
+## OptionalDeps: Ace3
+
+#@no-lib-strip@
+embeds.xml
+#@end-no-lib-strip@
+
+AmazingAzeroth.lua
