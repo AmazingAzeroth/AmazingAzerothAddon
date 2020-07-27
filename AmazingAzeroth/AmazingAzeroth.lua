@@ -52,7 +52,7 @@ end
 local function AutomateRoll(n, r)
     if(searchForRank == 2) then if(searchForName == "null") then
         rerollAgain = false end
-    elseif(r == searchForRank) then
+    elseif(r => searchForRank) then
         FinishRolling(n, r, 2)
         rerollAgain = false
     elseif(n:lower():find(searchForName)) then
