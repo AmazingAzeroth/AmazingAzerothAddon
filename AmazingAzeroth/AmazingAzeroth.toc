@@ -2,7 +2,7 @@
 ## Title: Amazing Azeroth
 ## Notes: Azeroth's Toolkit
 ## Author: Azeroth
-## Version: 1.0.0
+## Version: 1.0.1
 
 ## OptionalDeps: Ace3
 
