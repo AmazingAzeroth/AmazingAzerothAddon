@@ -11,6 +11,7 @@ local rerollAgain = false
 local rankColor = "|cff1eff00"
 local prefix = "|cffff8000AmazingAzeroth: "
 local color = "|cffe6cc80"
+local searchforhigher = true
 
 local function Help(arg)
     if(arg == "purge") then
@@ -26,6 +27,7 @@ local function Help(arg)
         print(prefix .. color .. "/AA ReRoll UseGold (True or False)")
         print(prefix .. color .. "/AA ReRoll Start")
         print(prefix .. color .. "/AA ReRoll Clear")
+        print(prefix .. color .. "/AA ReRoll HigherRarity (True or False)")
     else
         print(prefix .. color .. "Help")
         print(prefix .. color .. "All of these functions are macro compatable.")
@@ -52,9 +54,14 @@ end
 local function AutomateRoll(n, r)
     if(searchForRank == 2) then if(searchForName == "null") then
         rerollAgain = false end
-    elseif(r => searchForRank) then
-        FinishRolling(n, r, 2)
-        rerollAgain = false
+    elseif(r >= searchForRank) then
+        if(searchforhigher == true) then
+            if(searchForRank == r) then
+                FinishRolling(n, r, 2)
+                rerollAgain = false end
+        else
+            FinishRolling(n, r, 2)
+            rerollAgain = false end
     elseif(n:lower():find(searchForName)) then
         FinishRolling(n, r, 1)
         rerollAgain = false
@@ -105,6 +112,8 @@ local function RerollHandle(arg)
     elseif(arg == "usegold false") then rerollUseGold = false print(prefix .. color .. "No longer using gold for rerolls.")
     elseif(arg == "start") then rerollAgain = true RerollEnchantment()
     elseif(arg == "clear") then searchForName = "null" searchForRank = 2 print(prefix .. color .. "No longer searching for name or rarity previously defined.")
+    elseif(arg == "higherrarity true") then searchforhigher = true print(prefix .. color .. "Now searching for any rarity above defined rarity.")
+    elseif(arg == "higherrarity false") then searchforhigher = false print(prefix .. color .. "Now searching for exactly the defined rarity.")
     elseif(arg:sub(0,4) == "name") then searchForName = arg:sub(6) print(prefix .. color .. "Now searching for random enchant including " .. searchForName .. " in the name.")
     else Help("reroll") end
 end
