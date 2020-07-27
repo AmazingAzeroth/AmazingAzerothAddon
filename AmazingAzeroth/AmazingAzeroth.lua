@@ -10,8 +10,11 @@ local searchForName = "null"
 local rerollAgain = false
 local rankColor = "|cff1eff00"
 local prefix = "|cffff8000AmazingAzeroth: "
+local eprefix = "|cffff8000AmazingAzeroth: "
 local color = "|cffe6cc80"
 local searchforhigher = true
+local version = "120"
+local didReminder = false
 
 local function Help(arg)
     if(arg == "purge") then
@@ -32,9 +35,9 @@ local function Help(arg)
         print(prefix .. color .. "Help")
         print(prefix .. color .. "All of these functions are macro compatable.")
         print(prefix .. color .. "/AA")
-        print(prefix .. color .. "/AmazingAzeroth")
         print(prefix .. color .. "/AA Purge")
         print(prefix .. color .. "/AA ReRoll")
+        print(prefix .. color .. "/AA Version")
     end
 end
 
@@ -68,6 +71,39 @@ local function AutomateRoll(n, r)
     else end
     if (rerollAgain == true) then AmAz:ScheduleTimer(function()RerollEnchantment() end, 2) end
 end
+
+local vRequest = CreateFrame("Frame", "AAVSend", WorldFrame);
+vRequest:RegisterEvent("PLAYER_ENTERING_WORLD");
+vRequest:SetScript("OnEvent", function()
+    SendAddonMessage("AARequest", "getVersion", "GUILD")
+    SendAddonMessage("AARequest", "getVersion", "PARTY")
+    SendAddonMessage("AARequest", "getVersion", "RAID")
+end)
+
+local vCheck = CreateFrame("Frame", "AAVCheck", WorldFrame);
+vCheck:RegisterEvent("CHAT_MSG_ADDON");
+vCheck:SetScript("OnEvent", function(s,e,prefix,msg,form,player)
+    if prefix and not prefix:find("AAzeroth") then return else
+        if (tonumber(msg) > tonumber(version)) then
+            if(form == "WHISPER") then
+                if(didReminder == false) then
+                    print(eprefix .. color .. "Found Newer Version " .. msg .. " you have " .. version .. ".")
+                    didReminder = true
+                end
+            end
+        end
+    end
+end)
+
+local AARequest = CreateFrame("Frame", "AARequest", WorldFrame);
+AARequest:RegisterEvent("CHAT_MSG_ADDON");
+AARequest:SetScript("OnEvent", function(s,e,prefix,msg,form,player)
+    if prefix and not prefix:find("AARequest") then return else
+        if(msg == "getVersion") then
+            SendAddonMessage("AAzeroth", version, "WHISPER", player)
+        end
+    end
+end)
 
 local enchantHandlerFrame = CreateFrame("Frame", "AAEnchantFrame", WorldFrame);
 enchantHandlerFrame:RegisterEvent("CHAT_MSG_ADDON");
@@ -123,6 +159,12 @@ local function AAHandle(msg, chatbox)
         local _, _, cmd, arg = string.find(msg, "%s?(%w+)%s?(.*)") if(cmd==nil) then else cmd = string.lower(cmd) end if(arg==nil) then else arg = string.lower(arg) end
         if(cmd == "purge") then PurgeHandle(arg)
         elseif(cmd == "reroll") then RerollHandle(arg)
+        elseif(cmd == "version") then 
+            print(prefix .. color .. "Sent version request. If you don't see any updates within 10 seconds you most likely have the newest version.")
+            didReminder = false
+            SendAddonMessage("AARequest", "getVersion", "GUILD")
+            SendAddonMessage("AARequest", "getVersion", "PARTY")
+            SendAddonMessage("AARequest", "getVersion", "RAID")
         else Help(arg) end
 end
 
