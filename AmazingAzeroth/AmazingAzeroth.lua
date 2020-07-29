@@ -13,7 +13,7 @@ local prefix = "|cffff8000AmazingAzeroth: "
 local eprefix = "|cffff8000AmazingAzeroth: "
 local color = "|cffe6cc80"
 local searchforhigher = true
-local version = "130"
+local version = "131"
 local didReminder = false
 
 local function Help(arg)
@@ -155,6 +155,16 @@ local function RerollHandle(arg)
     else Help("reroll") end
 end
 
+local function ItemlevelHandle()
+    if(UnitExists("target") and CanInspect("target")) then InspectUnit("target")
+        local t,c,u,k=0,0,UnitExists("target")and"target"or"player"for i=1,18 do k=GetInventoryItemLink(u,i)if i~=4 and k then t=t+select(4,GetItemInfo(k))c=c+1 end end c=c>0 and print(t/c)
+        InspectFrame:Hide()
+    else InspectUnit("player")
+        local t,c,u,k=0,0,UnitExists("target")and"target"or"player"for i=1,18 do k=GetInventoryItemLink(u,i)if i~=4 and k then t=t+select(4,GetItemInfo(k))c=c+1 end end c=c>0 and print(t/c)
+        InspectFrame:Hide()
+    end
+end
+
 -- Base Command Handling
 local function AAHandle(msg, chatbox)
         local _, _, cmd, arg = string.find(msg, "%s?(%w+)%s?(.*)") if(cmd==nil) then else cmd = string.lower(cmd) end if(arg==nil) then else arg = string.lower(arg) end
@@ -166,7 +176,7 @@ local function AAHandle(msg, chatbox)
             SendAddonMessage("AARequest", "getVersion", "GUILD")
             SendAddonMessage("AARequest", "getVersion", "PARTY")
             SendAddonMessage("AARequest", "getVersion", "RAID")
-        elseif(cmd == "itemlevel") then local t,c,u,k=0,0,UnitExists("target")and"target"or"player"for i=1,18 do k=GetInventoryItemLink(u,i)if i~=4 and k then t=t+select(4,GetItemInfo(k))c=c+1 end end c=c>0 and print(t/c)
+        elseif(cmd == "itemlevel") then ItemlevelHandle()
         else Help(arg) end
 end
 
