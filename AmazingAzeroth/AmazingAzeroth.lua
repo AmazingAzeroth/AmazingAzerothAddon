@@ -13,7 +13,7 @@ local prefix = "|cffff8000AmazingAzeroth: "
 local eprefix = "|cffff8000AmazingAzeroth: "
 local color = "|cffe6cc80"
 local searchforhigher = true
-local version = "120"
+local version = "130"
 local didReminder = false
 
 local function Help(arg)
@@ -37,6 +37,7 @@ local function Help(arg)
         print(prefix .. color .. "/AA")
         print(prefix .. color .. "/AA Purge")
         print(prefix .. color .. "/AA ReRoll")
+        print(prefix .. color .. "/AA ItemLevel")
         print(prefix .. color .. "/AA Version")
     end
 end
@@ -165,6 +166,7 @@ local function AAHandle(msg, chatbox)
             SendAddonMessage("AARequest", "getVersion", "GUILD")
             SendAddonMessage("AARequest", "getVersion", "PARTY")
             SendAddonMessage("AARequest", "getVersion", "RAID")
+        elseif(cmd == "itemlevel") then local t,c,u,k=0,0,UnitExists("target")and"target"or"player"for i=1,18 do k=GetInventoryItemLink(u,i)if i~=4 and k then t=t+select(4,GetItemInfo(k))c=c+1 end end c=c>0 and print(t/c)
         else Help(arg) end
 end
 
