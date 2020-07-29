@@ -30,6 +30,10 @@ This command will allow you to override the Mystic Rune requirement and allow go
 This command will reset the name and rarity search settings. Please note that either a rarity or name needs to be provided for the auto reroller to function. Both can be provided as well. If both are provided the auto reroller will stop rerolling if either are found.
 ## /AA ReRoll Start
 This command will start the rerolling process. Make sure the item you are reforging is inside the mystic altar and your settings have been defined.
+## /AA ItemLevel
+This will print the target player's item level. If you are an outlaw you must inspect them before typing the command. A potential fix to this is being looked into.
+## /AA Version
+This will force a version check with Guild, Group, and Raid. If anyone has a newer version you will be notified.
 
 # **Planned Changes**
 * Ability to reset individual options by not providing an input (IE: resetting name or rarity search for the ReRoll)
