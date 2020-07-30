@@ -13,7 +13,7 @@ local prefix = "|cffff8000AmazingAzeroth: "
 local eprefix = "|cffff8000AmazingAzeroth: "
 local color = "|cffe6cc80"
 local searchforhigher = true
-local version = "131"
+local version = "132"
 local didReminder = false
 
 local function Help(arg)
@@ -59,7 +59,7 @@ local function AutomateRoll(n, r)
     if(searchForRank == 2) then if(searchForName == "null") then
         rerollAgain = false end
     elseif(r >= searchForRank) then
-        if(searchforhigher == true) then
+        if(searchforhigher == false) then
             if(searchForRank == r) then
                 FinishRolling(n, r, 2)
                 rerollAgain = false end
