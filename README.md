@@ -40,3 +40,5 @@ This will force a version check with Guild, Group, and Raid. If anyone has a new
 * Clearer defined help menu with better config
 * Menu Based options menu
 * Storing options so they save after logging in/out
+* Look for string in title seperated by commas.
+* World Boss / World Event Notification System / Scanner (IE Like rare mob scanner minimap icon - hover over to see when last event/world boss notification was)
